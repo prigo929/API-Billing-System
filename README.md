@@ -1,84 +1,109 @@
-# API Billing System
+# 🚀 API Billing System
 
-A comprehensive Java-based solution for tracking API usage, managing subscription plans, and automating billing processes. This project is built with a decoupled architecture, separating core business logic from the user interface.
+[![Java Version](https://img.shields.io/badge/Java-21-orange.svg)](https://www.oracle.com/java/technologies/downloads/#java21)
+[![Framework](https://img.shields.io/badge/Framework-Vaadin%2024-blue.svg)](https://vaadin.com/)
+[![Database](https://img.shields.io/badge/Database-PostgreSQL-blue.svg)](https://www.postgresql.org/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-## 🏗 Project Architecture
+A premium, enterprise-grade solution for tracking API consumption and managing complex billing cycles. This system provides a robust backend for usage aggregation and a sleek, interactive frontend for administrative oversight.
 
-The project is structured as a **Maven Multi-Module Project** to ensure a clean separation of concerns:
-
-*   **`api-usage-core` (API usage and billing)**: The engine of the system. Contains JPA entities, business rules for billing, usage recording logic, and database persistence.
-*   **`web-ui` (Vaadin Web Layer)**: The administrative dashboard. Built with Vaadin 24, it provides a modern web interface to manage clients, plans, and invoices.
 
 ---
 
-## 🚀 Features
+## 🏗 System Architecture
 
-### Core Logic
-- **API Tracking**: Record usage summaries and individual usage records.
-- **Subscription Management**: Define flexible plans with multiple pricing tiers.
-- **Automated Billing**: Generate detailed invoices and invoice lines based on usage.
-- **Payment Processing**: Support for multiple payment methods (Card, Bank Transfer, Wallet).
-- **Rate Limiting**: Define and enforce rate limit rules for API keys.
+The project utilizes a **decoupled multi-module architecture**, ensuring that business logic remains independent of the presentation layer.
 
-### Administrative UI
-- **Client Dashboard**: View and manage client accounts and their API keys.
-- **Plan Manager**: Create and modify subscription tiers and pricing.
-- **Invoice Explorer**: Search and manage generated invoices and their statuses.
+```mermaid
+graph TD
+    subgraph "Web Layer (Vaadin 24)"
+        UI[Main Dashboard]
+        CV[Client Views]
+        IV[Invoice Management]
+    end
+
+    subgraph "Core Layer (JPA / Java 21)"
+        BS[Billing Service]
+        US[Usage Summarizer]
+        EM[Entity Models]
+    end
+
+    subgraph "Persistence"
+        DB[(PostgreSQL)]
+    end
+
+    UI --> BS
+    BS --> US
+    US --> EM
+    EM --> DB
+```
+
+---
+
+## ✨ Key Features
+
+### 💎 Core Engine
+- **Granular Usage Tracking**: Captures every API hit with precise timestamps and status codes.
+- **Dynamic Pricing**: Support for tiered pricing (e.g., Free, Pro, Enterprise) with custom thresholds.
+- **Financial Automation**: Automatically calculates totals, applies taxes, and generates professional PDF-ready invoices.
+- **Payment Orchestration**: Built-in support for Card, Bank Transfer, and Digital Wallet reconciliation.
+
+### 🖥 Admin Dashboard
+- **Real-time Analytics**: Monitor API traffic and revenue trends at a glance.
+- **Client 360**: Full visibility into client accounts, active API keys, and billing history.
+- **Subscription Control**: Easy-to-use forms for updating plans and managing rate limits.
 
 ---
 
 ## 🛠 Tech Stack
 
-- **Language**: Java 21
-- **Web Framework**: Vaadin 24
-- **Persistence**: JPA (EclipseLink)
-- **Database**: PostgreSQL
-- **Build Tool**: Maven
-- **Server**: Jetty (embedded for development)
+| Component | Technology |
+| :--- | :--- |
+| **Language** | Java 21 (LTS) |
+| **Frontend** | Vaadin 24 (Web Components) |
+| **ORM** | EclipseLink / Jakarta Persistence |
+| **Validation** | Hibernate Validator |
+| **Database** | PostgreSQL |
+| **Server** | Jetty / Apache Tomcat |
 
 ---
 
-## 📋 Prerequisites
+## ⚙️ Development Setup
 
-- **Java 21** or higher
-- **Maven 3.9+**
-- **PostgreSQL** running locally
+### 1. Database Configuration
+The system uses **Jakarta Persistence**. Ensure your PostgreSQL instance is configured:
 
----
-
-## ⚙️ Getting Started
-
-### 1. Database Setup
-Ensure you have a PostgreSQL database running. By default, the system looks for:
-- **URL**: `jdbc:postgresql://localhost:5432/postgres`
-- **User**: `postgres`
-- **Password**: `postgres`
-
-*Note: You can update these settings in `API usage and billing/src/main/resources/META-INF/persistence.xml`.*
-
-### 2. Build the Project
-Run the following command from the root directory to compile both modules:
-```bash
-mvn clean install
+```xml
+<!-- persistence.xml -->
+<property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/postgres"/>
+<property name="jakarta.persistence.jdbc.user" value="postgres"/>
+<property name="jakarta.persistence.jdbc.password" value="postgres"/>
 ```
 
-### 3. Run the Web Application
-Navigate to the web layer and start the Jetty server:
+### 2. Build & Run
+From the root directory:
+
 ```bash
+# Compile and install both modules
+mvn clean install
+
+# Launch the Web Dashboard
 cd "Vaadin Web Layer"
 mvn jetty:run
 ```
-Once started, the dashboard will be available at: `http://localhost:8080`
 
 ---
 
-## 📂 Directory Structure
+## 📂 Project Structure
 
-```text
-API Billing System/
-├── pom.xml                        # Parent POM (Dependency Management)
-├── API usage and billing/         # Core Domain & Logic (Module)
-│   └── src/main/java/org/example/ # Entities, Services, Logic
-└── Vaadin Web Layer/              # Web Interface (Module)
-    └── src/main/java/org/example/ # Vaadin Views & UI Components
-```
+- `api-usage-core/` - **The Brain**: Contains all entities (`ApiKey`, `ClientAccount`, `Invoice`) and the `BillingService`.
+- `vaadin-web-ui/` - **The Face**: Contains the `MainView` and navigable grids for a seamless admin experience.
+
+---
+
+## 📜 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+<p align="center">Built with ❤️ for scalable API ecosystems.</p>
